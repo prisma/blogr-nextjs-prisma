@@ -4,25 +4,19 @@
   "dependencyDashboard": true,
   "rebaseWhen": "behind-base-branch",
   "timezone": "Europe/Berlin",
-  "schedule": ["every weekend"],
   "baseBranches": ["main", "final"],
   "additionalReviewers": ["ruheni", "nikolasburk"],
   "packageRules": [
     {
       "matchDepTypes": ["devDependencies"],
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchUpdateTypes": ["major","minor", "patch"],
       "groupName": "devDependencies",
       "groupSlug": "dev-dependencies",
       "schedule": ["every weekend"]
     },
     {
-      "matchDepTypes": ["devDependencies, dependencies"],
-      "matchUpdateTypes": ["major"],
-      "enabled": false
-    },
-    {
       "matchDepTypes": ["dependencies"],
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchUpdateTypes": ["major","minor", "patch"],
       "groupName": "dependencies",
       "groupSlug": "dependencies",
       "schedule": ["every weekend"]
@@ -32,8 +26,7 @@
       "matchPackageNames": ["prisma"],
       "matchUpdateTypes": ["major", "minor", "patch"],
       "groupName": "Prisma Dependencies",
-      "groupSlug": "prisma-deps",
-      "schedule": ["after 6pm on Tuesday"]
+      "groupSlug": "prisma-deps"
     }
   ]
 }
