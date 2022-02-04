@@ -1,0 +1,32 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "semanticCommits": "enabled",
+  "dependencyDashboard": true,
+  "rebaseWhen": "behind-base-branch",
+  "timezone": "Europe/Berlin",
+  "baseBranches": ["main", "final"],
+  "additionalReviewers": ["ruheni", "nikolasburk"],
+  "packageRules": [
+    {
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["major","minor", "patch"],
+      "groupName": "devDependencies",
+      "groupSlug": "dev-dependencies",
+      "schedule": ["every weekend"]
+    },
+    {
+      "matchDepTypes": ["dependencies"],
+      "matchUpdateTypes": ["major","minor", "patch"],
+      "groupName": "dependencies",
+      "groupSlug": "dependencies",
+      "schedule": ["every weekend"]
+    },
+    {
+      "matchPackagePatterns": ["@prisma/*"],
+      "matchPackageNames": ["prisma"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "groupName": "Prisma Dependencies",
+      "groupSlug": "prisma-deps"
+    }
+  ]
+}
