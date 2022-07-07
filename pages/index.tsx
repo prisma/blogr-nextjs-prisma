@@ -1,10 +1,10 @@
 import React from "react"
-import { GetServerSideProps } from "next"
+import type { GetStaticProps } from "next"
 import Layout from "../components/Layout"
 import Post, { PostProps } from "../components/Post"
 import prisma from "../lib/prisma";
 
-export const geServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({
     where: { published: true },
     include: {
@@ -13,7 +13,10 @@ export const geServerSideProps: GetServerSideProps = async () => {
       },
     },
   })
-  return { props: { feed } }
+  return {
+    props: { feed },
+    revalidate: 10,
+  }
 }
 
 type Props = {
