@@ -1,9 +1,9 @@
 import React from "react"
-import { GetServerSideProps } from "next"
+import { GetStaticProps } from "next"
 import Layout from "../components/Layout"
 import Post, { PostProps } from "../components/Post"
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const feed = [
     {
       id: "1",
@@ -16,7 +16,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
       },
     },
   ]
-  return { props: { feed } }
+  return { 
+    props: { feed }, 
+    revalidate: 10 
+  }
 }
 
 type Props = {
