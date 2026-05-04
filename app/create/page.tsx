@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { auth } from "@/auth";
 import { createPost } from "@/app/actions";
+import { getCurrentUser } from "@/lib/auth";
 
 export default async function CreatePage() {
-  const session = await auth();
+  const user = await getCurrentUser();
 
-  if (!session?.user?.email) {
+  if (!user) {
     return (
       <div className="panel">
         <h1>New Draft</h1>

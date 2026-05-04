@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
-import { auth } from "@/auth";
 import { deletePost, publishPost } from "@/app/actions";
+import { getCurrentUser } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 
 type PostPageProps = {
@@ -10,8 +10,8 @@ type PostPageProps = {
 
 export default async function PostPage({ params }: PostPageProps) {
   const { id } = await params;
-  const [session, post] = await Promise.all([
-    auth(),
+  const [user, post] = await Promise.all([
+    getCurrentUser(),
     prisma.post.findUnique({
       where: { id },
       include: {
@@ -26,7 +26,7 @@ export default async function PostPage({ params }: PostPageProps) {
     notFound();
   }
 
-  const postBelongsToUser = session?.user?.email === post.author?.email;
+  const postBelongsToUser = user?.id === post.authorId;
   const title = post.published ? post.title : `${post.title} (Draft)`;
 
   return (

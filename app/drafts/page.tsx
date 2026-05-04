@@ -1,11 +1,11 @@
-import { auth } from "@/auth";
 import PostCard, { type PostCardData } from "@/components/post-card";
+import { getCurrentUser } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 
 export default async function DraftsPage() {
-  const session = await auth();
+  const user = await getCurrentUser();
 
-  if (!session?.user?.email) {
+  if (!user) {
     return (
       <div className="panel">
         <h1>My Drafts</h1>
@@ -16,7 +16,7 @@ export default async function DraftsPage() {
 
   const drafts = await prisma.post.findMany({
     where: {
-      author: { email: session.user.email },
+      authorId: user.id,
       published: false,
     },
     include: {

@@ -1,7 +1,7 @@
 {
   "name": "blogr-nextjs-prisma",
   "version": "1.0.0",
-  "description": "A fullstack blog built with Next.js, Prisma, Auth.js, and Neon Postgres.",
+  "description": "A fullstack blog built with Next.js, Prisma, Sign in with Vercel, and Neon Postgres.",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -16,12 +16,11 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@auth/prisma-adapter": "2.11.2",
     "@prisma/adapter-neon": "7.8.0",
     "@prisma/client": "7.8.0",
     "dotenv": "17.2.3",
+    "jose": "6.2.3",
     "next": "16.2.4",
-    "next-auth": "5.0.0-beta.31",
     "react": "19.2.5",
     "react-dom": "19.2.5",
     "react-markdown": "10.1.0"

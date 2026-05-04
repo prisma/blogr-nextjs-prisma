@@ -2,15 +2,14 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { auth } from "@/auth";
+import { getCurrentUser } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 
 export async function createPost(formData: FormData) {
-  const session = await auth();
-  const email = session?.user?.email;
+  const user = await getCurrentUser();
 
-  if (!email) {
-    redirect("/api/auth/signin");
+  if (!user) {
+    redirect("/api/auth/authorize");
   }
 
   const title = String(formData.get("title") ?? "").trim();
@@ -24,7 +23,7 @@ export async function createPost(formData: FormData) {
     data: {
       title,
       content,
-      author: { connect: { email } },
+      author: { connect: { id: user.id } },
     },
   });
 
@@ -33,19 +32,18 @@ export async function createPost(formData: FormData) {
 }
 
 export async function publishPost(id: string) {
-  const session = await auth();
-  const email = session?.user?.email;
+  const user = await getCurrentUser();
 
-  if (!email) {
-    redirect("/api/auth/signin");
+  if (!user) {
+    redirect("/api/auth/authorize");
   }
 
   const post = await prisma.post.findUnique({
     where: { id },
-    select: { author: { select: { email: true } } },
+    select: { authorId: true },
   });
 
-  if (post?.author?.email !== email) {
+  if (post?.authorId !== user.id) {
     throw new Error("You can only publish your own posts.");
   }
 
@@ -61,19 +59,18 @@ export async function publishPost(id: string) {
 }
 
 export async function deletePost(id: string) {
-  const session = await auth();
-  const email = session?.user?.email;
+  const user = await getCurrentUser();
 
-  if (!email) {
-    redirect("/api/auth/signin");
+  if (!user) {
+    redirect("/api/auth/authorize");
   }
 
   const post = await prisma.post.findUnique({
     where: { id },
-    select: { author: { select: { email: true } } },
+    select: { authorId: true },
   });
 
-  if (post?.author?.email !== email) {
+  if (post?.authorId !== user.id) {
     throw new Error("You can only delete your own posts.");
   }
 

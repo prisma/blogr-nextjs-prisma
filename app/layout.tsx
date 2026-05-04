@@ -1,29 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { auth, signIn, signOut } from "@/auth";
+import { getCurrentUser } from "@/lib/auth";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Blogr",
-  description: "A fullstack blog built with Next.js, Prisma, Auth.js, and Neon.",
+  description:
+    "A fullstack blog built with Next.js, Prisma, Sign in with Vercel, and Neon.",
 };
-
-async function signInWithGitHub() {
-  "use server";
-  await signIn("github", { redirectTo: "/" });
-}
-
-async function signOutUser() {
-  "use server";
-  await signOut({ redirectTo: "/" });
-}
 
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth();
+  const user = await getCurrentUser();
 
   return (
     <html lang="en">
@@ -31,25 +22,23 @@ export default async function RootLayout({
         <header className="header">
           <nav className="nav" aria-label="Main navigation">
             <Link href="/">Feed</Link>
-            {session ? <Link href="/drafts">My drafts</Link> : null}
+            {user ? <Link href="/drafts">My drafts</Link> : null}
           </nav>
           <div className="header-actions">
-            {session?.user ? (
+            {user ? (
               <>
-                <span className="user">
-                  {session.user.name ?? session.user.email}
-                </span>
+                <span className="user">{user.name ?? user.email}</span>
                 <Link className="button secondary" href="/create">
                   New post
                 </Link>
-                <form action={signOutUser}>
+                <form action="/api/auth/signout" method="post">
                   <button type="submit">Log out</button>
                 </form>
               </>
             ) : (
-              <form action={signInWithGitHub}>
-                <button type="submit">Log in</button>
-              </form>
+              <Link className="button" href="/api/auth/authorize">
+                Sign in with Vercel
+              </Link>
             )}
           </div>
         </header>
