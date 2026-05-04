@@ -6,7 +6,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Blogr",
   description:
-    "A fullstack blog built with Next.js, Prisma, Sign in with Vercel, and Neon.",
+    "A fullstack blog built with Next.js, Prisma, Sign in with Vercel, and Prisma Postgres.",
 };
 
 export default async function RootLayout({
