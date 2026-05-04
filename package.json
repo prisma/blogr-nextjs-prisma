@@ -1,28 +1,36 @@
 {
-  "name": "hello-next",
+  "name": "blogr-nextjs-prisma",
   "version": "1.0.0",
-  "description": "",
+  "description": "A fullstack blog built with Next.js, Prisma, Auth.js, and Neon Postgres.",
+  "private": true,
   "scripts": {
-    "dev": "next",
+    "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "postinstall": "prisma generate"
+  },
+  "engines": {
+    "node": ">=20.19.0"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@next-auth/prisma-adapter": "1.0.1",
-    "@prisma/client": "4.16.2",
-    "next": "12.0.10",
-    "next-auth": "4.1.2",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-markdown": "8.0.0"
+    "@auth/prisma-adapter": "2.11.2",
+    "@prisma/adapter-neon": "7.8.0",
+    "@prisma/client": "7.8.0",
+    "dotenv": "17.2.3",
+    "next": "16.2.4",
+    "next-auth": "5.0.0-beta.31",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
+    "react-markdown": "10.1.0"
   },
   "devDependencies": {
-    "@types/node": "17.0.14",
-    "@types/react": "17.0.38",
-    "prisma": "4.16.2",
-    "typescript": "4.9.5"
+    "@types/node": "24.10.1",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "prisma": "7.8.0",
+    "typescript": "6.0.3"
   }
 }

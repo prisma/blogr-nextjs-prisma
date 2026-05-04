@@ -1,17 +1,22 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaNeon } from "@prisma/adapter-neon";
+import { PrismaClient } from "@/generated/prisma/client";
 
-// Docs about instantiating `PrismaClient` with Next.js:
-// https://pris.ly/d/help/next-js-best-practices
+const connectionString = process.env.DATABASE_URL;
 
-let prisma: PrismaClient;
+if (!connectionString) {
+  throw new Error("DATABASE_URL is not set");
+}
 
-if (process.env.NODE_ENV === "production") {
-  prisma = new PrismaClient();
-} else {
-  if (!global.prisma) {
-    global.prisma = new PrismaClient();
-  }
-  prisma = global.prisma;
+const adapter = new PrismaNeon({ connectionString });
+
+const globalForPrisma = globalThis as unknown as {
+  prisma?: PrismaClient;
+};
+
+const prisma = globalForPrisma.prisma ?? new PrismaClient({ adapter });
+
+if (process.env.NODE_ENV !== "production") {
+  globalForPrisma.prisma = prisma;
 }
 
 export default prisma;

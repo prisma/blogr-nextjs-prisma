@@ -1,8 +1,8 @@
-# Fullstack Authentication Example with Next.js and NextAuth.js
+# Fullstack Blog Example with Next.js, Prisma, Auth.js, and Neon
 
-This is the final version of the project that's built in the fullstack tutorial with Next.js and Prisma.
+This is the final version of the project built in the fullstack tutorial with Next.js, Prisma, Auth.js, and Neon Postgres.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/git?env=DATABASE_URL,DATABASE_URL_UNPOOLED,GITHUB_ID,GITHUB_SECRET,NEXTAUTH_URL,SECRET)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/prisma/blogr-nextjs-prisma/tree/final&env=DATABASE_URL,DATABASE_URL_UNPOOLED,AUTH_SECRET,AUTH_GITHUB_ID,AUTH_GITHUB_SECRET)
 
 Use a Vercel Marketplace Postgres provider, such as [Neon](https://vercel.com/marketplace/neon), for this example. The app expects `DATABASE_URL` for pooled runtime connections and `DATABASE_URL_UNPOOLED` for Prisma schema changes.
 
